@@ -546,13 +546,8 @@ import { PiPlusFill } from "react-icons/pi";
 export default function AdminLandingPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // For mobile sidebar toggle
   const [courses, setCourses] = useState([
-    {
-      name: "Web Design - From Figma to Web",
-      image: "https://via.placeholder.com/150",
-    },
-    { name: "Web Basics", image: "https://via.placeholder.com/150" },
-    { name: "Advanced React", image: "https://via.placeholder.com/150" },
-  ]); // Dummy course data
+   
+  ]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -566,14 +561,16 @@ export default function AdminLandingPage() {
 
   const fetchBeneficiaryInfo = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/auth/register`, {
+      const response = await fetch(`${BASE_URL}/course`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
       const result = await response.json();
       if (response.ok) {
-        setOriginalDetail(result.users);
-        setDetail(result.users);
+        setOriginalDetail(result);
+        setDetail(result);
+        setCourses(result.courses)
+        // console.log(result.courses)
       } else {
         console.error("Failed to fetch users");
       }
@@ -636,10 +633,22 @@ export default function AdminLandingPage() {
                 </a>
               </li>
               <li className="mb-4">
-                <a href="#" className="flex items-center text-gray-600">
+                <Link to={'/admin/adtrainer'} className="flex items-center text-gray-600">
                   <i className="fas fa-chalkboard-teacher mr-3" />
                   Trainer
-                </a>
+                </Link>
+              </li>
+              <li className="mb-4">
+                <Link to={'/admin/adsection'} className="flex items-center text-gray-600">
+                  <i className="fas fa-chalkboard-teacher mr-3" />
+                  Section
+                </Link>
+              </li>
+              <li className="mb-4">
+                <Link to={'/admin/adbatch'} className="flex items-center text-gray-600">
+                  <i className="fas fa-chalkboard-teacher mr-3" />
+                  Batch
+                </Link>
               </li>
               <li className="mb-4">
                 <a href="#" className="flex items-center text-gray-600">
@@ -703,17 +712,13 @@ export default function AdminLandingPage() {
           <h2 className="text-lg font-semibold mb-4">My Courses</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {courses.map((course, index) => (
-              <div
-                key={index}
-                className="bg-gray-100 p-4 rounded-lg text-center"
-              >
-                <img
-                  src={course.image}
-                  alt={course.name}
-                  className="w-24 h-24 object-cover mb-2 mx-auto"
-                />
-                <p className="text-gray-600">{course.name}</p>
-              </div>
+              <div key={index} className="p-4 border rounded-lg shadow-lg">
+              <img src={course.courseImage} alt={course.name} className="w-full h-40 rounded" />
+              <h2 className="text-xl font-semibold mt-2">{course.courseName}</h2>
+              <p className="text-gray-600">{course.courseDescription}</p>
+              <p className="font-bold text-green-600">Batch: {course.courseBatch}</p>
+              <p className="font-bold text-blue-600">Section: {course.courseSection}</p>  
+            </div>
             ))}
           </div>
         </div>

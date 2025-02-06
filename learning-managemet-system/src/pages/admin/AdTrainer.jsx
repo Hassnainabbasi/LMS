@@ -29,6 +29,10 @@ const AddTrainer = () => {
 
       if (response.ok) {
         alert("Trainer added successfully");
+        setTrainerName("");
+        setTrainerEmail("");
+        setTrainerBio("");
+        setTrainerPhone("");
       } else {
         alert(`Error: ${result.message}`);
       }

@@ -8,6 +8,9 @@ import AddCourse from "./pages/admin/AddCourse";
 import AddTrainer from "./pages/admin/AdTrainer";
 import AdSection from "./pages/admin/AdSection";
 import AdBatch from "./pages/admin/AdBatch";
+import Quiz from "./pages/admin/Quiz";
+import StartQuiz from "./pages/admin/StartQuizLPage";
+import AssignmentSend from "./pages/teacher/AssigmentSend";
 
 export default function App() {
   return (
@@ -19,8 +22,10 @@ export default function App() {
         <Route path="/admin/adtrainer" element={<AddTrainer />} />
         <Route path="/admin/adsection" element={<AdSection />} />
         <Route path="/admin/adbatch" element={<AdBatch />} />
-        
+        <Route path="/admin/quiz" element={<Quiz />} />
+        <Route path="/admin/startquiz" element={<StartQuiz />} />
         <Route path="/teacher" element={<Teacher />} />
+        <Route path="/teacher/assigment" element={<AssignmentSend />} />
         <Route path="/student" element={<Student />} />
       </Routes>
     </BrowserRouter>

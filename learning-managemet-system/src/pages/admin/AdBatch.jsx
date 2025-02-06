@@ -4,8 +4,8 @@ import { BASE_URL } from '../../constant';
 const AddBatch = () => {
   const [batchNo, setBatchNo] = useState('');
   const [status, setStatus] = useState('pending');
-  const [course, setCourse] = useState([]); // Array of courses
-  const [courseId, setCourseId] = useState(''); // Selected course ID
+  const [course, setCourse] = useState([]);
+  const [courseId, setCourseId] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [selectedcourseName, setSelectedcourseName] = useState("");
@@ -48,8 +48,8 @@ const AddBatch = () => {
       });
       const result = await response.json();
       if (response.ok) {
-        setCourse(result.courses); // Assuming result contains the array of courses
-        console.log(result.courses);
+        setCourse(result.course); // Assuming result contains the array of courses
+        console.log(result); // Assuming result contains the array of courses
 
       } else {
         console.error("Failed to fetch courses");
@@ -75,12 +75,12 @@ const AddBatch = () => {
  
 useEffect(() => {
   if (course.length > 0) {
-    setSelectedcourseId(""); // Default value reset
+    setSelectedcourseId(""); 
   }
 }, [course]);
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg mt-10 animate__animated animate__fadeIn">
+    <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-lg mt-10 animate__animated animate__fadeIn">
       <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Add Batch</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

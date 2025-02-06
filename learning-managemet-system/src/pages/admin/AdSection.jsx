@@ -3,14 +3,14 @@ import { BASE_URL } from '../../constant';
 import Select from 'react-select';
 
 const AddSection = () => {
-  const [sectionNo, setsectionNo] = useState('');
+  const [sectionName, setsectionName] = useState('');
   const [sectionTiming, setSectionTiming] = useState({ startTime: '', endTime: '' });
   const [courseId, setCourseId] = useState('');
   const [course, setCourse] = useState([]);
   const [trainer, setTrainer] = useState([]);
   const [batch, setBatch] = useState([]);
   const [trainerId, setTrainerId] = useState('');
-  const [batchId, setBatchId] = useState('');
+  const [sections , setSections] = useState([]);
   const [status, setStatus] = useState('pending');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -91,7 +91,7 @@ const AddSection = () => {
     e.preventDefault();
     setLoading(true);
     const sectionData = {
-      sectionNo,
+      sectionName,
       sectionTiming: `${sectionTiming.startTime} - ${sectionTiming.endTime}`,
       course: selectedcourseId,
       trainer: selectedTrainerId,
@@ -99,7 +99,7 @@ const AddSection = () => {
       status,
     };
 
-    console.log(sectionData)
+    // console.log(sectionData)
     try {
       const response = await fetch(`${BASE_URL}/auth/section`, {
         method: 'POST',
@@ -109,7 +109,7 @@ const AddSection = () => {
       const data = await response.json();
       if (data.message === 'Section registered successfully') {
         setMessage('Section Added Successfully!');
-        setsectionNo('');
+        setsectionName('');
         setSectionTiming({ startTime: '', endTime: '' });
         setSelectedcourseId('');
         setSelectedTrainerId('');
@@ -133,7 +133,7 @@ const AddSection = () => {
       const result = await response.json();
       if (response.ok) {
         setBatch(result.batch); // Assuming result contains the array of courses
-        console.log(result.batch);
+        // console.log(result.batch);
 
       } else {
         console.error("Failed to fetch courses");
@@ -143,6 +143,25 @@ const AddSection = () => {
     }
   };
 
+  const getSections = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/auth/section`, {
+        method: "GET",
+      });
+      const result = await response.json();
+      if (response.ok) {
+        // setBatch(result.section); // Assuming result contains the array of courses
+        // console.log(result.section,"yeh hye");
+
+      } else {
+        console.error("Failed to fetch courses");
+      }
+    } catch (error) {
+      console.error("Error fetching course data:", error);
+    }
+  };
+
+
  const getCourse = async () => {
      try {
        const response = await fetch(`${BASE_URL}/course`, {
@@ -150,8 +169,8 @@ const AddSection = () => {
        });
        const result = await response.json();
        if (response.ok) {
-         setCourse(result.courses); // Assuming result contains the array of courses
-         console.log(result.courses);
+         setCourse(result.course); // Assuming result contains the array of courses
+        //  console.log(result,"All Result Ka Data");
  
        } else {
          console.error("Failed to fetch courses");
@@ -185,6 +204,7 @@ useEffect(() => {
 
    useEffect(() => {
      getTrainers();
+     getSections()
    }, []);
 
    useEffect(() => {
@@ -196,16 +216,16 @@ useEffect(() => {
   }, []);
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg mt-10 animate__animated animate__fadeIn">
+    <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-lg mt-10 animate__animated animate__fadeIn">
       <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Add Section</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="sectionNo" className="block text-sm font-medium text-gray-600">Section No</label>
+          <label htmlFor="sectionName" className="block text-sm font-medium text-gray-600">Section Name</label>
           <input
             type="text"
-            id="sectionNo"
-            value={sectionNo}
-            onChange={(e) => setsectionNo(e.target.value)}
+            id="sectionName"
+            value={sectionName}
+            onChange={(e) => setsectionName(e.target.value)}
             className="mt-2 p-2 w-full border border-gray-300 rounded-md"
             required
           />
@@ -266,6 +286,7 @@ useEffect(() => {
                   <option key={t._id} value={t._id}>{t.trainerName}</option>
                 ))}
               </select>
+
         </div>
         <div className="mb-4">
           <label htmlFor="batchId" className="block text-sm font-medium text-gray-600">Batch</label>

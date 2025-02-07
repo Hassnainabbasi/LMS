@@ -1,17 +1,23 @@
-
-
-import { MoveDiagonal2 } from "lucide-react";
+import Modal from "react-modal";  // Import the Modal component
 import { useState } from "react";
-import { SiModal } from "react-icons/si";
+import AddSection from "../admin/AdSection";
+import CreateAssigment from "./CreateAssigment";
 
 export default function AssignmentSend() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading , setLoading] = useState(false);
   
- 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = () => {
+    console.log("Opening modal");
+    setIsModalOpen(true);
+  };
+  
+  const closeModal = () => {
+    console.log("Closing modal");
+    setIsModalOpen(false);
+  };
+  
 
   const handleSubmit = (e) =>{
     console.log("Form submitted",e);
@@ -115,7 +121,7 @@ export default function AssignmentSend() {
                 View
               </button>
               <button className="bg-yellow-500 text-white px-4 py-2 rounded">
-                On going
+                onGoing
               </button>
             </div>
           </div>
@@ -129,7 +135,7 @@ export default function AssignmentSend() {
                 View
               </button>
               <button className="bg-yellow-500 text-white px-4 py-2 rounded">
-                On going
+                onGoing
               </button>
             </div>
           </div>
@@ -177,7 +183,7 @@ export default function AssignmentSend() {
                 View
               </button>
               <button className="bg-yellow-500 text-white px-4 py-2 rounded">
-                On going
+                onGoing
               </button>
             </div>
           </div>
@@ -227,81 +233,14 @@ export default function AssignmentSend() {
           </div>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
+        <div className="modal-content rounded-lg max-w-lg mx-auto">
+          <CreateAssigment />
+           <button onClick={closeModal} className="bg-gray-400 text-white py-2 px-4 rounded-lg mt-4 hover:bg-gray-500">Close</button>
         </div>
-          <MoveDiagonal2 isOpen={isModalOpen} onRequestClose={closeModal}>
-                <div className="modal-content bg-white p-6 rounded-lg shadow-xl w-full mx-auto">
-                  <h2 className="text-2xl font-semibold text-center mb-4">Add New Course</h2>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <label htmlFor="courseName" className="block text-sm font-medium">Course Name</label>
-                      <input
-                        type="text"
-                        id="courseName"
-                        // onChange={(e) => setCourseName(e.target.value)}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
-                      />
-                    </div>
-        
-                    <div>
-                      <label htmlFor="courseDescription" className="block text-sm font-medium">Course Description</label>
-                      <textarea
-                        id="courseDescription"
-                        // onChange={(e) => setCourseDescription(e.target.value)}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
-                      />
-                    </div>
-        
-                    {/* <div className="relative">
-                      <div {...getRo()} className="border-dashed border-2 border-gray-300 rounded-lg p-4 text-center">
-                        <input {...getInputProps()} />
-                        <p className="text-gray-500">Drag & drop an image, or click to select</p>
-                        {courseImage && <p className="mt-2 text-sm">{courseImage.name}</p>}
-                      </div>
-                    </div> */}
-        
-                    <div>
-                      <label htmlFor="trainer" className="block text-sm font-medium">Trainer</label>
-                      <select
-                        id="trainer"
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
-                      >
-                        <option value="" disabled>Select Trainer</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor="courseSection" className="block text-sm font-medium">Section</label>
-                      <select
-                        id="courseSection"
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
-                      >
-                        <option value="">Select Section</option>
-                      </select>
-                    </div>
+      </Modal>
+        </div>
 
-        
-                    <div className="flex gap-4 justify-center mt-6">
-                      <button
-                        type="submit"
-                        className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
-                        disabled={loading}
-                      >
-                        {loading ? <span>Loading...</span> : "Add Course"}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={closeModal}
-                        className="bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500"
-                      >
-                        Close
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </MoveDiagonal2>
       </div>
     );
   }

@@ -11,12 +11,14 @@ import AdBatch from "./pages/admin/AdBatch";
 import Quiz from "./pages/admin/Quiz";
 import StartQuiz from "./pages/admin/StartQuizLPage";
 import AssignmentSend from "./pages/teacher/AssigmentSend";
+import Auth from "./auth/Auth";
 
 export default function App() {
   return (
     <BrowserRouter>
         <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/adcourse" element={<AddCourse />} />
         <Route path="/admin/adtrainer" element={<AddTrainer />} />

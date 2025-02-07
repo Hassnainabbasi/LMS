@@ -5,6 +5,8 @@ const AddTrainer = () => {
   const [trainerEmail, setTrainerEmail] = useState("");
   const [trainerPhone, setTrainerPhone] = useState("");
   const [trainerBio, setTrainerBio] = useState("");
+  const [trainerPassword, setTrainerPassword] = useState("");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,6 +16,7 @@ const AddTrainer = () => {
       trainerEmail,
       trainerPhone,
       trainerBio,
+      trainerPassword
     };
 
     try {
@@ -33,6 +36,7 @@ const AddTrainer = () => {
         setTrainerEmail("");
         setTrainerBio("");
         setTrainerPhone("");
+        setTrainerPassword("");
       } else {
         alert(`Error: ${result.message}`);
       }
@@ -74,6 +78,20 @@ const AddTrainer = () => {
               required
             />
           </div>
+            
+          <div>
+            <label htmlFor="trainerName" className="block text-gray-700 font-semibold">
+              Trainer Password
+            </label>
+            <input
+              type="text"
+              id="trainerName"
+              value={trainerPassword}
+              onChange={(e) => setTrainerPassword(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              required
+            />
+          </div>
 
           <div>
             <label htmlFor="trainerPhone" className="block text-gray-700 font-semibold">
@@ -99,6 +117,7 @@ const AddTrainer = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
+          
           <div>
             <button
               type="submit"

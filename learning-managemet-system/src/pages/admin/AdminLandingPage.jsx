@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BASE_URL } from "../../constant";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css"; // Make sure Font Awesome is imported
 import { SiCoursera } from "react-icons/si";
 import { FileIcon, Folder, Italic } from "lucide-react";
@@ -42,6 +42,12 @@ export default function AdminLandingPage() {
     }
   };
 
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // LocalStorage se data remove ka
+    navigate('/auth')
+  };
+
   useEffect(() => {
     fetchBeneficiaryInfo();
   }, []);
@@ -57,6 +63,35 @@ export default function AdminLandingPage() {
       setDetail(filteredData);
     }
   }, [searchTerm, originalDetail]);
+
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  
+  //   if (!token) {
+  //     navigate("/auth"); // Token nahi hai to login page pe bhej do
+  //   } else {
+  //     fetch("http://localhost:5000/auth/admins/verify-token", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         if (data.error) {
+  //           localStorage.removeItem("token");
+  //           navigate("/auth"); 
+  //         }
+  //       })
+  //       .catch(() => {
+  //         localStorage.removeItem("token");
+  //         navigate("/auth");
+  //       });
+  //   }
+  // }, []);
+  
 
   return (
     <div className="flex h-screen">
@@ -129,7 +164,7 @@ export default function AdminLandingPage() {
         <div className="p-6">
           <a href="#" className="flex items-center text-gray-600">
             <i className="fas fa-sign-out-alt mr-3" />
-            Logout
+      <button onClick={handleLogout}>Logout</button>
           </a>
         </div>
       </div>

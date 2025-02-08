@@ -80,7 +80,7 @@ export default function AddCourse() {
   const getCourse = async () => {
     try {
       const response = await fetch(`${BASE_URL}/course`, {
-        method: "GET"
+        method: "GET",
       });
       const result = await response.json();
       if (response.ok) {

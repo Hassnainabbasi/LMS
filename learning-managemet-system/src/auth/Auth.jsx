@@ -32,19 +32,11 @@ export default function Auth() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [teacherEmail, setTeacherEmail] = useState("");
-  const [teacherData, setTeacherData] = useState("");
+  const [teacherPassword, setteacherPassword] = useState("");
   const [studentEmail, setStudentEmail] = useState("");
   const [studentData, setStudentData] = useState("");
 
   const navigate = useNavigate();
-  
-  // let userData = {
-  //   name: "Ali",
-  //   email: "ali@example.com",
-  //   role: "admin"
-  // };
-  
-  // localStorage.setItem("token", JSON.stringify(userData));
   
   const handleAdminSubmit = async(e) => {
     e.preventDefault();
@@ -55,7 +47,6 @@ export default function Auth() {
     try {
         const response = await fetch("http://localhost:3000/auth/login", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email,
             password
@@ -66,13 +57,9 @@ export default function Auth() {
         if (response.ok) {
           alert(`logged in successfully`);
           console.log(result)
-          localStorage.setItem("token", result.data.token);
           navigate('/admin')
         } else {
           alert(`Error: ${result.message}`);
-        }
-        if(!localStorage.getItem("token")){
-          navigate("/auth")
         }
       } catch (error) {
         console.error("Error:", error);
@@ -80,12 +67,38 @@ export default function Auth() {
       }
   };
   
-  const handleTeacherSubmit = (e) => {
+  const handleTeacherSubmit = async(e) => {
     e.preventDefault();
     console.log("Teacher Data Submitted:", 
-       teacherData,
-       teacherEmail 
+      teacherEmail,
+      teacherPassword,
     );
+    try {
+      const response = await fetch("http://localhost:3000/tokenteacher/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          teacherEmail,
+          teacherPassword,
+        }),
+      });
+      const result = await response.json();
+
+      if (response.ok) {
+        alert(`logged in successfully`);
+        console.log(result)
+        localStorage.setItem("token", result.data.token);
+        navigate('/teacher')
+      } else {
+        alert(`Error: ${result.message}`);
+      }
+      if(!localStorage.getItem("token")){
+        navigate("/auth")
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong.");
+    }
   };
   
   const handleStudentSubmit = (e) => {
@@ -98,12 +111,11 @@ export default function Auth() {
 
   const handleAdminChange = (e) => {
     setemail({ ...email, [e.target.name]: e.target.value });
-    // console.log("Admin Data:", email);
   };
 
   const handleTeacherChange = (e) => {
-    setTeacherData({ ...teacherData, [e.target.name]: e.target.value });
-    console.log("Teacher Data:", teacherData);
+    setteacherPassword({ ...teacherPassword, [e.target.name]: e.target.value });
+    console.log("Teacher Data:", teacherPassword);
   };
 
   const handleStudentChange = (e) => {
@@ -228,15 +240,15 @@ export default function Auth() {
                 <input
                   type="password"
                   name="password"
-                  value={teacherData}
-              onChange={(e) => setTeacherData(e.target.value)}
+                  value={teacherPassword}
+              onChange={(e) => setteacherPassword(e.target.value)}
                   placeholder="Password"
                   className="w-full px-4 py-2 border rounded-lg mb-4"
                 />
               <button className="w-full py-2 mb-4 text-white bg-purple-500 rounded-lg hover:bg-purple-600">
                 LOGIN
               </button>
-              <button onSubmit={handleToken}>Token</button>
+              {/* <button onSubmit={handleToken}>Token</button> */}
               </form>
             )}
           </motion.div>

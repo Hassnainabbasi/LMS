@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";  // Import the Modal component
 import { useDropzone } from "react-dropzone";
 import "font-awesome/css/font-awesome.min.css";
-import { Link } from "react-router-dom";
 import { BASE_URL } from "../../constant";
 import AddBatch from "./AdBatch";
 import AddSection from "./AdSection";

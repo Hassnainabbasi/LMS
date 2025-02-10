@@ -147,10 +147,10 @@ export default function AdminLandingPage() {
                 </Link>
               </li>
               <li className="mb-4">
-                <a href="#" className="flex items-center text-gray-600">
+                <Link to={'/admin/adstudent'} className="flex items-center text-gray-600">
                   <i className="fas fa-user mr-3" />
                   Students
-                </a>
+                </Link>
               </li>
               <li className="mb-4">
                 <Link to={'/admin/startquiz'} className="flex items-center text-gray-600">

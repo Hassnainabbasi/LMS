@@ -12,6 +12,7 @@ import Quiz from "./pages/admin/Quiz";
 import StartQuiz from "./pages/admin/StartQuizLPage";
 import AssignmentSend from "./pages/teacher/AssigmentSend";
 import Auth from "./auth/Auth";
+import AdStudent from "./pages/admin/AdStudent";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/admin/adtrainer" element={<AddTrainer />} />
         <Route path="/admin/adsection" element={<AdSection />} />
         <Route path="/admin/adbatch" element={<AdBatch />} />
+        <Route path="/admin/adstudent" element={<AdStudent />} />
         <Route path="/admin/quiz" element={<Quiz />} />
         <Route path="/admin/startquiz" element={<StartQuiz />} />
         <Route path="/teacher" element={<Teacher />} />

@@ -47,17 +47,17 @@ export default function Auth() {
     try {
         const response = await fetch("http://localhost:3000/auth/login", {
           method: "POST",
-          body: JSON.stringify({
-            email,
-            password
-          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email,password }),
         });
         const result = await response.json();
-
+       
         if (response.ok) {
           alert(`logged in successfully`);
+          navigate("/admin")
           console.log(result)
-          navigate('/admin')
         } else {
           alert(`Error: ${result.message}`);
         }
@@ -122,13 +122,6 @@ export default function Auth() {
     setStudentData({ ...studentData, [e.target.name]: e.target.value });
     console.log("Student Data:", studentData);
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/admin");
-    }
-  }, []);
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-gray-900 p-4">
